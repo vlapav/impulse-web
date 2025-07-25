@@ -1,0 +1,19 @@
+{
+  "name": "Impulse Invest",
+  "short_name": "Impulse",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#007aff",
+  "background_color": "#ffffff",
+  "shortcuts": [
+    {
+      "name": "Invest Amount",
+      "url": "/?amount=100",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
