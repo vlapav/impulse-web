@@ -12,14 +12,13 @@
     h1{font-size:28px;margin:8px 0}
     p{font-size:16px;opacity:.9}
     button{margin-top:28px;padding:16px 48px;border:none;border-radius:12px;background:#fff;color:#007aff;font-size:17px;font-weight:600}
-    img{width:160px;height:160px;object-fit:contain;margin-bottom:20px}
+    input{font-size:48px;width:100%;border:none;text-align:center;margin-bottom:16px}
   </style>
 </head>
 <body>
 
 <!-- 1. Welcome -->
 <section id="welcome" class="screen active">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNTAgMTBhNDAgNDAgMCAxIDAgMCA4MCA0MCA0MCAwIDAgMCAwLTgwem0wIDEwYTMwIDMwIDAgMSAxIDAgNjAgMzAgMzAgMCAwIDEgMC02MHptLTEyIDEyYTggOCAwIDEgMCAwIDE2IDggOCAwIDAgMCAwLTE2em0yNCAwYTggOCAwIDEgMCAwIDE2IDggOCAwIDAgMCAwLTE2eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="Logo">
   <h1>Welcome to Impulse Invest</h1>
   <p>Turn every “buy” into an investment in seconds.</p>
   <button onclick="show('bank')">Get Started</button>
@@ -27,65 +26,36 @@
 
 <!-- 2. Connect Bank -->
 <section id="bank" class="screen">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgMjBoNjB2NjBIMjB6IiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Ik0zMCAzMGg0MHY0MEgzMHoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="Bank">
   <h1>Connect Your Bank</h1>
   <p>We use Plaid to link your checking account securely.</p>
-  <button onclick="connectBank()">Connect with Plaid</button>
+  <button onclick="show('notify')">Connect (demo)</button>
 </section>
 
 <!-- 3. Enable Notifications -->
 <section id="notify" class="screen">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNTAgMTBhNDAgNDAgMCAxIDAgMCA4MCA0MCA0MCAwIDAgMCAwLTgweiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik01MCA2MGE4IDggMCAxIDAgMCA4IDggOCAwIDAgMCAwLTh6IiBmaWxsPSIjMDA3YWZmIi8+PC9zdmc+" alt="Bell">
   <h1>Stay in the Loop</h1>
   <p>Get instant confirmations when you invest.</p>
-  <button onclick="enableNotifications()">Enable Notifications</button>
+  <button onclick="show('invest')">Enable (demo)</button>
 </section>
 
-<!-- 4. Enable Face ID / Biometrics -->
-<section id="biometrics" class="screen">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNTAgMTBhNDAgNDAgMCAxIDAgMCA4MCA0MCA0MCAwIDAgMCAwLTgwem0wIDEwYTMwIDMwIDAgMSAxIDAgNjAgMzAgMzAgMCAwIDEgMC02MHptLTEyIDEyaDI0djI0SDM4eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="Face">
-  <h1>Quick & Secure</h1>
-  <p>Use Face ID (or fingerprint) to approve every investment.</p>
-  <button onclick="enableBiometrics()">Enable Face ID</button>
-</section>
-
-<!-- 5. Main Invest Card -->
+<!-- 4. Main Invest Card -->
 <section id="invest" class="screen">
   <h1>Impulse Invest</h1>
-  <input id="amount" type="number" placeholder="$0" min="1" step="0.01" style="font-size:48px;width:100%;border:none;text-align:center;margin-bottom:16px">
-  <p>Invest in VTI</p>
+  <input id="amount" type="number" placeholder="$0">
   <button onclick="invest()">Swipe Up to Invest →</button>
 </section>
 
 <script>
   function show(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   }
-
-  function connectBank(){
-    // In real life open Plaid Link here
-    alert('Bank connected (demo)!');
-    show('notify');
+  function invest(){
+    const amt = document.getElementById('amount').value;
+    if(!amt){ alert('Enter an amount'); return; }
+    alert(`$${amt} invested in VTI!`);
+    document.getElementById('amount').value = '';
   }
-
-  function enableNotifications(){
-    Notification.requestPermission().then(p=>alert(p==='granted'?'Notifications on!':'Notifications off'));
-    show('biometrics');
-  }
-
-  function enableBiometrics() {
-  // WebAuthn or localStorage flag demo
-  alert('Face ID enabled (demo)!');
-  show('invest');
-}
-
-function invest() {
-  const amt = document.getElementById('amount').value;
-  if (!amt) { alert('Enter an amount'); return; }
-  alert(`$${amt} invested in VTI!`);
-  document.getElementById('amount').value='';
-}
 </script>
 </body>
 </html>
