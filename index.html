@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
   <title>Impulse Invest</title>
+  <link rel="manifest" href="manifest.json"/>
   <style>
     *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
     body{margin:0;height:100vh;background:#007aff;color:#fff;display:flex;align-items:center;justify-content:center}
@@ -18,24 +19,24 @@
 <body>
 
 <!-- 1. Welcome -->
-<section id="welcome" class="screen active">
+<section id="welcome" class="screen">
   <h1>Welcome to Impulse Invest</h1>
   <p>Turn every “buy” into an investment in seconds.</p>
-  <button onclick="show('bank')">Get Started</button>
+  <button onclick="skipOnboarding()">Get Started</button>
 </section>
 
 <!-- 2. Connect Bank -->
 <section id="bank" class="screen">
   <h1>Connect Your Bank</h1>
   <p>We use Plaid to link your checking account securely.</p>
-  <button onclick="show('notify')">Connect (demo)</button>
+  <button onclick="finishOnboarding()">Connect (demo)</button>
 </section>
 
 <!-- 3. Enable Notifications -->
 <section id="notify" class="screen">
   <h1>Stay in the Loop</h1>
   <p>Get instant confirmations when you invest.</p>
-  <button onclick="show('invest')">Enable (demo)</button>
+  <button onclick="finishOnboarding()">Enable (demo)</button>
 </section>
 
 <!-- 4. Main Invest Card -->
@@ -46,10 +47,34 @@
 </section>
 
 <script>
+  // ---------- helpers ----------
   function show(id){
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   }
+  function skipOnboarding(){ show('invest'); }
+  function finishOnboarding(){ localStorage.setItem('onboarded','1'); show('invest'); }
+
+  // ---------- outside triggers ----------
+  window.addEventListener('load', ()=>{
+    // 1. URL trigger:  ?amount=50
+    const params = new URLSearchParams(location.search);
+    const amtFromURL = params.get('amount');
+    if(amtFromURL){
+      document.getElementById('amount').value = amtFromURL;
+      show('invest');
+      return;
+    }
+
+    // 2. Share-sheet / Quick-action triggers via manifest shortcuts
+    //    (shortcuts are declared in manifest.json below)
+    if(localStorage.getItem('onboarded')==='1'){
+      show('invest');
+    }else{
+      show('welcome');
+    }
+  });
+
   function invest(){
     const amt = document.getElementById('amount').value;
     if(!amt){ alert('Enter an amount'); return; }
