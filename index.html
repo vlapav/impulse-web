@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Impulse Invest</title>
+  <style>
+    body{margin:0;font-family:Arial;background:#f2f2f7;display:flex;align-items:center;justify-content:center;height:100vh}
+    #box{background:#fff;padding:30px;border-radius:20px;width:300px;text-align:center;box-shadow:0 4px 12px #0003}
+    #amt{font-size:50px;width:100%;border:none;text-align:center;margin-bottom:20px}
+    button{padding:15px 0;width:100%;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:18px}
+  </style>
+</head>
+<body>
+  <div id="box">
+    <input id="amt" type="number" placeholder="0">
+    <button onclick="alert('You invested $'+amt.value+' in VTI!')">Invest →</button>
+  </div>
+</body>
+</html>
