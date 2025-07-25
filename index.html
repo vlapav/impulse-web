@@ -74,18 +74,18 @@
     show('biometrics');
   }
 
-  function enableBiometrics(){
-    // WebAuthn or localStorage flag demo
-    alert('Face ID enabled (demo)!');
-    show('invest');
-  }
+  function enableBiometrics() {
+  // WebAuthn or localStorage flag demo
+  alert('Face ID enabled (demo)!');
+  show('invest');
+}
 
-  function invest(){
-    const amt = document.getElementById('amount').value;
-    if(!amt){ alert('Enter an amount'); return; }
-    alert(`$${amt} invested in VTI!`);
-    document.getElementById('amount').value='';
-  }
+function invest() {
+  const amt = document.getElementById('amount').value;
+  if (!amt) { alert('Enter an amount'); return; }
+  alert(`$${amt} invested in VTI!`);
+  document.getElementById('amount').value='';
+}
 </script>
 </body>
 </html>
